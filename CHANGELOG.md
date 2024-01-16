@@ -1,5 +1,11 @@
 # solid-highlight
 
+## 0.0.2
+
+### Patch Changes
+
+- initial
+
 ## 1.0.2
 
 ### Patch Changes

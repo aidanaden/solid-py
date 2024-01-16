@@ -1,6 +1,6 @@
 {
   "name": "solid-py",
-  "version": "1.0.2",
+  "version": "0.0.2",
   "description": "Effortlessly run Python code in your Solid apps",
   "license": "MIT",
   "author": {
@@ -32,10 +32,6 @@
   "types": "./dist/index.d.ts",
   "browser": {},
   "exports": {
-    "solid": {
-      "development": "./dist/dev.jsx",
-      "import": "./dist/index.jsx"
-    },
     "development": {
       "import": {
         "types": "./dist/index.d.ts",

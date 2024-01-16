@@ -12,35 +12,34 @@ import {
   suppressedMessages,
   usePythonProvider,
 } from "../providers/python-provider";
-import { Packages, PythonRunner } from "../types";
+import { ConsoleState, Packages, PythonConsoleRunner } from "../types";
 import useFilesystem from "./use-fs";
 
 interface UsePythonProps {
   packages?: Packages;
 }
 
-export default function usePython(props: UsePythonProps) {
+export default function usePythonConsole(props: UsePythonProps) {
   const [runnerId, setRunnerId] = createSignal<string>();
   const [isLoading, setIsLoading] = createSignal(false);
+  const [banner, setBanner] = createSignal<string | undefined>();
+  const [consoleState, setConsoleState] = createSignal<ConsoleState>();
   const [isRunning, setIsRunning] = createSignal(false);
-  const [output, setOutput] = createSignal<string[]>([]);
   const [stdout, setStdout] = createSignal("");
   const [stderr, setStderr] = createSignal("");
   const [pendingCode, setPendingCode] = createSignal<string | undefined>();
-  const [hasRun, setHasRun] = createSignal(false);
 
   const {
     packages: globalPackages,
     timeout,
     lazy,
-    terminateOnCompletion,
     sendInput,
     workerAwaitingInputIds,
     getPrompt,
   } = usePythonProvider();
 
   const [workerRef, setWorkerRef] = createSignal<Worker | undefined>();
-  let runnerRef: Remote<PythonRunner> | undefined;
+  let runnerRef: Remote<PythonConsoleRunner> | undefined;
 
   const {
     readFile,
@@ -54,7 +53,7 @@ export default function usePython(props: UsePythonProps) {
 
   const createWorker = () => {
     const worker = new Worker(
-      new URL("../workers/python-worker", import.meta.url)
+      new URL("../workers/python-console-worker", import.meta.url)
     );
     setWorkerRef(worker);
   };
@@ -92,7 +91,7 @@ export default function usePython(props: UsePythonProps) {
       if (worker && !isReady()) {
         try {
           setIsLoading(true);
-          const runner: Remote<PythonRunner> = wrap(worker);
+          const runner: Remote<PythonConsoleRunner> = wrap(worker);
           runnerRef = runner;
 
           await runner.init(
@@ -101,10 +100,11 @@ export default function usePython(props: UsePythonProps) {
               if (suppressedMessages.includes(msg)) {
                 return;
               }
-              setOutput((prev) => [...prev, msg]);
+              setStdout(msg);
             }),
-            proxy(({ id, version }) => {
+            proxy(({ id, version, banner }) => {
               setRunnerId(id);
+              setBanner(banner);
               console.debug("Loaded pyodide version:", version);
             }),
             allPackages()
@@ -118,15 +118,6 @@ export default function usePython(props: UsePythonProps) {
     })
   );
 
-  // Immediately set stdout upon receiving new input
-  createEffect(
-    on(output, (out) => {
-      if (out.length > 0) {
-        setStdout(out.join("\n"));
-      }
-    })
-  );
-
   // React to ready state and run delayed code if pending
   createEffect(
     on([pendingCode, isReady], async ([code, ready]) => {
@@ -135,20 +126,6 @@ export default function usePython(props: UsePythonProps) {
         setPendingCode(undefined);
       }
     })
-  );
-
-  // React to run completion and run cleanup if worker should terminate on completion
-  createEffect(
-    on(
-      [terminateOnCompletion, hasRun, isRunning],
-      ([terminate, hasRun, isRunning]) => {
-        if (terminate && hasRun && !isRunning) {
-          cleanup();
-          setIsRunning(false);
-          setRunnerId(undefined);
-        }
-      }
-    )
   );
 
   const pythonRunnerCode = `
@@ -183,10 +160,10 @@ export default function usePython(props: UsePythonProps) {
   `
 
   const runPython = async (code: string, preamble = "") => {
-    const ready = isReady();
     // Clear stdout and stderr
     setStdout("");
     setStderr("");
+    const ready = isReady();
 
     if (lazy() && !ready) {
       // Spawn worker and set pending code
@@ -195,19 +172,12 @@ export default function usePython(props: UsePythonProps) {
       return;
     }
 
-    code = `${pythonRunnerCode}\n\nrun(${JSON.stringify(
-      code
-    )}, ${JSON.stringify(preamble)})`;
-
     if (!ready) {
       throw new Error("Pyodide is not loaded yet");
     }
     let timeoutTimer;
     try {
       setIsRunning(true);
-      setHasRun(true);
-      // Clear output
-      setOutput([]);
       if (!runnerRef) {
         throw new Error("Pyodide is not loaded yet");
       }
@@ -221,9 +191,13 @@ export default function usePython(props: UsePythonProps) {
       if (watchedModules().size > 0) {
         await runnerRef.run(moduleReloadCode(watchedModules()));
       }
-      await runnerRef.run(code);
+      const { state, error } = await runnerRef.run(code);
+      setConsoleState(ConsoleState[state as keyof typeof ConsoleState]);
+      if (error) {
+        setStderr(error);
+      }
     } catch (error: any) {
-      setStderr("Traceback (most recent call last):\n" + error.message);
+      console.error("Error pushing to console:", error);
     } finally {
       setIsRunning(false);
       clearTimeout(timeoutTimer);
@@ -234,19 +208,16 @@ export default function usePython(props: UsePythonProps) {
     cleanup();
     setIsRunning(false);
     setRunnerId(undefined);
-    setOutput([]);
+    setBanner(undefined);
+    setConsoleState(undefined);
 
     // Spawn new worker
     createWorker();
   };
 
   const cleanup = () => {
-    const worker = workerRef();
-    if (!worker) {
-      return;
-    }
     console.debug("Terminating worker");
-    worker.terminate();
+    workerRef()?.terminate();
   };
 
   const isAwaitingInput = createMemo(() => {

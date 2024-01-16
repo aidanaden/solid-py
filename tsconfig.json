@@ -3,7 +3,7 @@
     "strict": true,
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker", "es2017"],
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,

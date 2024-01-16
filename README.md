@@ -1,110 +1,120 @@
 <p>
-  <img width="100%" src="https://assets.solidjs.com/banner?type=solid-highlight-words&background=tiles&project=%20" alt="solid-highlight-words">
+  <img width="100%" src="https://assets.solidjs.com/banner?type=solid-py&background=tiles&project=%20" alt="solid-py">
 </p>
 
-# solid-highlight-words
+# solid-py
 
 >
 
-[![size](https://img.shields.io/bundlephobia/minzip/solid-highlight-words?style=for-the-badge)](https://bundlephobia.com/package/solid-highlight-words)
-[![size](https://img.shields.io/npm/v/solid-highlight-words?style=for-the-badge)](https://www.npmjs.com/package/solid-highlight-words)
-![npm](https://img.shields.io/npm/dw/solid-highlight-words?style=for-the-badge)
+[![size](https://img.shields.io/bundlephobia/minzip/solid-py?style=for-the-badge)](https://bundlephobia.com/package/solid-py)
+[![size](https://img.shields.io/npm/v/solid-py?style=for-the-badge)](https://www.npmjs.com/package/solid-py)
+![npm](https://img.shields.io/npm/dw/solid-py?style=for-the-badge)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg?style=for-the-badge&logo=pnpm)](https://pnpm.io/)
 
-[download-image]: https://img.shields.io/npm/dm/solid-highlight-words.svg
-[download-url]: https://npmjs.org/package/solid-highlight-words
+[download-image]: https://img.shields.io/npm/dm/solid-py.svg
+[download-url]: https://npmjs.org/package/solid-py
 
-[![solid-highlight-words](https://nodei.co/npm/solid-highlight-words.png)](https://npmjs.org/package/solid-highlight-words)
+[![solid-py](https://nodei.co/npm/solid-py.png)](https://npmjs.org/package/solid-py)
 
-Solid component to highlight words within a larger body of text. Based on [react-highlight-words](https://github.com/bvaughn/react-highlight-words)
+<!-- <p align="center">
+  <a href="https://elilambnz.github.io/react-py/#gh-light-mode-only" target="_blank">
+    <img src="./.github/logo-light.png" alt="react-py" width="350" height="70">
+  </a>
+  <a href="https://elilambnz.github.io/react-py/#gh-dark-mode-only" target="_blank">
+    <img src="./.github/logo-dark.png" alt="react-py" width="350" height="70">
+  </a>
+</p> -->
 
-Check out a demo [here](https://solid-highlight-words.pages.dev).
+<p align="center">
+  Effortlessly run Python code in your Solid apps. <a href="https://elilambnz.github.io/react-py">Try it out!</a>
+</p>
 
-## Usage
+<!-- <p align="center">
+  <a href="https://github.com/elilambnz/react-py/actions?query=workflow%3ACI+branch%3Amain"><img src="https://img.shields.io/github/actions/workflow/status/elilambnz/react-py/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
+  <a href="https://github.com/elilambnz/react-py/actions?query=workflow%3ACodeQL+branch%3Amain"><img src="https://img.shields.io/github/actions/workflow/status/elilambnz/react-py/codeql-analysis.yml?branch=main&style=flat-square&label=CodeQL" alt="CodeQL"></a>
+  <a href="https://github.com/elilambnz/react-py/blob/main/LICENSE.md"><img src="https://img.shields.io/npm/l/react-py?style=flat-square" alt="MIT License"></a>
+  <a href="https://www.npmjs.com/package/react-py"><img src="https://img.shields.io/npm/v/react-py?style=flat-square" alt="NPM Version"></a>
+  <a href="https://bundlephobia.com/package/react-py"><img src="https://img.shields.io/bundlephobia/min/react-py?style=flat-square" alt="NPM Bundle Size"></a>
+</p> -->
 
-Install it:
+---
 
-```bash
-npm i solid-highlight-words
-# or
-yarn add solid-highlight-words
-# or
-pnpm add solid-highlight-words
+> ✨ <a href="https://pyrepl.io">PyRepl.io</a> is a Python interpreter in your browser. Embed interactive Python examples in your documentation, blog posts, presentations and more. <a href="https://pyrepl.io">Get started for free.</a>
+
+## Quickstart
+
+Install `solid-py` with:
+
+```sh
+npm install solid-py
 ```
 
-To use it, just provide it with an array of search terms and a body of text to highlight.
+Then, wrap your app in a `PythonProvider` component.
 
-[Try this example in Code Sandbox.](https://codesandbox.io/p/sandbox/elated-dubinsky-nxrpvj)
+```tsx
+import { PythonProvider } from "solid-py";
 
-```jsx
-import { createRoot } from "solid-js";
-import Highlighter from "solid-highlight-words";
+function App() {
+  return (
+    // Add the provider to your app
+    <PythonProvider>
+      <Codeblock />
+    </PythonProvider>
+  );
+}
 
-const root = createRoot(document.getElementById("root"));
-root.render(
-  <Highlighter
-    highlightClassName="YourHighlightClass"
-    searchWords={["and", "or", "the"]}
-    autoEscape={true}
-    textToHighlight="The dog is chasing the cat. Or perhaps they're just playing?"
-  />
-);
+render(<App />, document.getElementById("root"));
 ```
 
-And the `Highlighter` will mark all occurrences of search terms within the text:
+Using the `usePython` hook, you can run code and access both stdout and stderr. For full usage instructions and framework specific guides, see the [usage docs](https://elilambnz.github.io/react-py/docs/introduction/usage).
 
-<img width="368" alt="screen shot 2015-12-19 at 8 23 43 am" src="https://cloud.githubusercontent.com/assets/29597/11914033/e3c319f6-a629-11e5-896d-1a5ce22c9ea2.png">
+## Documentation
 
-## Props
+For full documentation, visit [elilambnz.github.io/react-py](https://elilambnz.github.io/react-py).
 
-| Property               | Type                        | Required? | Description                                                                                                                                                                                                                                                                                                                                                        |
-| ---------------------- | --------------------------- | :-------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `activeClassName`      | String                      |           | The class name to be applied to an active match. Use along with `activeIdx`                                                                                                                                                                                                                                                                                        |
-| `activeIdx`            | Number                      |           | Specify the match index that should be actively highlighted. Use along with `activeClassName`                                                                                                                                                                                                                                                                      |
-| `activeStyle`          | Object                      |           | The inline style to be applied to an active match. Use along with `activeIdx`                                                                                                                                                                                                                                                                                      |
-| `autoEscape`           | Boolean                     |           | Escape characters in `searchWords` which are meaningful in regular expressions                                                                                                                                                                                                                                                                                     |
-| `className`            | String                      |           | CSS class name applied to the outer/wrapper `<span>`                                                                                                                                                                                                                                                                                                               |
-| `caseSensitive`        | Boolean                     |           | Search should be case sensitive; defaults to `false`                                                                                                                                                                                                                                                                                                               |
-| `findChunks`           | Function                    |           | Use a custom function to search for matching chunks. This makes it possible to use arbitrary logic when looking for matches. See the default `findChunks` function in [highlight-words-core](https://github.com/bvaughn/highlight-words-core) for signature. Have a look at the [custom findChunks example](https://codesandbox.io/s/k20x3ox31o) on how to use it. |
-| `highlightClassName`   | String or Object            |           | CSS class name applied to highlighted text or object mapping search term matches to class names.                                                                                                                                                                                                                                                                   |
-| `highlightStyle`       | Object                      |           | Inline styles applied to highlighted text                                                                                                                                                                                                                                                                                                                          |
-| `highlightTag`         | Node or String              |           | Type of tag to wrap around highlighted matches. Defaults to `mark` but can also be a Solid ValidComponent                                                                                                                                                                                                                                                          |
-| `sanitize`             | Function                    |           | Process each search word and text to highlight before comparing (eg remove accents); signature `(text: string): string`                                                                                                                                                                                                                                            |
-| `searchWords`          | Array<String &#124; RegExp> |     ✓     | Array of search words. String search terms are automatically cast to RegExps unless `autoEscape` is true.                                                                                                                                                                                                                                                          |
-| `textToHighlight`      | String                      |     ✓     | Text to highlight matches in                                                                                                                                                                                                                                                                                                                                       |
-| `unhighlightClassName` | String                      |           | CSS class name applied to unhighlighted text                                                                                                                                                                                                                                                                                                                       |
-| `unhighlightStyle`     | Object                      |           | Inline styles applied to unhighlighted text                                                                                                                                                                                                                                                                                                                        |
-| `unhighlightTag`       | Node or String              |           | Type of tag applied to unhighlighted parts. Defaults to `span` but can also be a Solid ValidComponent                                                                                                                                                                                                                                                              |
-| \*                     | any                         |           | Any other props (such as `title` or `data-*`) are applied to the outer/wrapper `<span>`                                                                                                                                                                                                                                                                            |
+## Examples
 
-## Custom highlight tag
+[Basic Example](https://elilambnz.github.io/react-py/docs/examples/basic-example)
 
-By default, this component uses an HTML Mark Text element (`<mark>`) to wrap matched text, but you can inject a custom
-tag using the `highlightTag` property. This tag should be a Solid ValidComponent that accepts the following properties:
+[REPL](https://elilambnz.github.io/react-py/docs/examples/repl)
 
-| Property       | Type   | Description            |
-| -------------- | ------ | ---------------------- |
-| `children`     | String | Text to be highlighted |
-| `highlightIdx` | Number | Index of matched text  |
+[Interrupting Execution](https://elilambnz.github.io/react-py/docs/examples/interrupting-execution)
 
-For example:
+[Using Packages](https://elilambnz.github.io/react-py/docs/examples/using-packages)
 
-```js
-const Highlight = ({ children, highlightIdx }) => (
-  <strong className="highlighted-text">{children}</strong>
-);
-```
+[File System](https://elilambnz.github.io/react-py/docs/examples/file-system)
 
-## Installation
+[Custom Modules](https://elilambnz.github.io/react-py/docs/examples/custom-modules)
 
-```
-yarn add solid-highlight-words
-```
+[Making API Calls](https://elilambnz.github.io/react-py/docs/examples/making-api-calls)
 
-```
-npm i solid-highlight-words
-```
+[User Input](https://elilambnz.github.io/react-py/docs/examples/user-input)
+
+[Data Visualisation](https://elilambnz.github.io/react-py/docs/examples/data-visualisation)
+
+## Limitations
+
+Most of the Python standard library is functional, except from some modules. The following modules can be imported, but are not functional due to the limitations of the WebAssembly VM:
+
+- multiprocessing
+- threading
+- sockets
+
+[Learn more about the limitations here](https://pyodide.org/en/stable/usage/wasm-constraints.html).
 
 ## License
 
-MIT License - fork, modify and use however you want.
+_solid-py_ is available under the MIT License.
+
+## Contact
+
+Eli Lamb - [elilambnz](https://github.com/elilambnz)  
+James Ansley - [James-Ansley](https://github.com/James-Ansley)
+
+## Acknowledgments
+
+This project uses [Pyodide](https://pyodide.org), a Python distribution for the browser and Node.js based on WebAssembly.
+
+## Contributing
+
+If you're interested in contributing, please read our [contributing docs](https://github.com/elilambnz/python-py/blob/master/CONTRIBUTING.md) **before submitting a pull request**.

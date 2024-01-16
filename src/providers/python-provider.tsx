@@ -19,7 +19,7 @@ type PythonContextProps = {
   getPrompt: (id: string) => string | undefined;
 };
 
-const PythonContext = createContext<PythonContextProps>();
+export const PythonContext = createContext<PythonContextProps>();
 // {
 //     packages: {} as Packages,
 //     timeout: 0,
