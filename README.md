@@ -95,7 +95,7 @@ _solid-py_ is available under the MIT License.
 
 ## Contact
 
-Aidan Aden - [aidan](https://github.com/aidan)
+Ryan Aidan - [aidanaden](https://github.com/aidanaden)
 
 ## Acknowledgments
 
