@@ -131,23 +131,22 @@ export default function usePythonConsole(props: UsePythonProps) {
   );
 
   const pythonRunnerCode = `
-  import sys
+import sys
   
-  sys.tracebacklimit = 0
+sys.tracebacklimit = 0
   
-  def run(code, preamble=''):
-      globals_ = {}
-      try:
-          exec(preamble, globals_)
-          code = compile(code, 'code', 'exec')
-          exec(code, globals_)
-      except Exception:
-          type_, value, tracebac = sys.exc_info()
-          tracebac = tracebac.tb_next
-          raise value.with_traceback(tracebac)
-      finally:
-          print()
-  `;
+def run(code, preamble=''):
+    globals_ = {}
+    try:
+        exec(preamble, globals_)
+        code = compile(code, 'code', 'exec')
+        exec(code, globals_)
+    except Exception:
+        type_, value, tracebac = sys.exc_info()
+        tracebac = tracebac.tb_next
+        raise value.with_traceback(tracebac)
+    finally:
+        print()`;
 
   // prettier-ignore
   const moduleReloadCode = (modules: Set<string>) => `

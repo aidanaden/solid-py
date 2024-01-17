@@ -1,5 +1,11 @@
 # solid-highlight
 
+## 0.0.10
+
+### Patch Changes
+
+- test remove indent in python runner code
+
 ## 0.0.9
 
 ### Patch Changes
