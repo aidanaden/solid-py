@@ -16,26 +16,9 @@
 
 [![solid-py](https://nodei.co/npm/solid-py.png)](https://npmjs.org/package/solid-py)
 
-<!-- <p align="center">
-  <a href="https://elilambnz.github.io/react-py/#gh-light-mode-only" target="_blank">
-    <img src="./.github/logo-light.png" alt="react-py" width="350" height="70">
-  </a>
-  <a href="https://elilambnz.github.io/react-py/#gh-dark-mode-only" target="_blank">
-    <img src="./.github/logo-dark.png" alt="react-py" width="350" height="70">
-  </a>
-</p> -->
-
 <p align="center">
   Effortlessly run Python code in your Solid apps. <a href="https://elilambnz.github.io/react-py">Try it out!</a>
 </p>
-
-<!-- <p align="center">
-  <a href="https://github.com/elilambnz/react-py/actions?query=workflow%3ACI+branch%3Amain"><img src="https://img.shields.io/github/actions/workflow/status/elilambnz/react-py/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
-  <a href="https://github.com/elilambnz/react-py/actions?query=workflow%3ACodeQL+branch%3Amain"><img src="https://img.shields.io/github/actions/workflow/status/elilambnz/react-py/codeql-analysis.yml?branch=main&style=flat-square&label=CodeQL" alt="CodeQL"></a>
-  <a href="https://github.com/elilambnz/react-py/blob/main/LICENSE.md"><img src="https://img.shields.io/npm/l/react-py?style=flat-square" alt="MIT License"></a>
-  <a href="https://www.npmjs.com/package/react-py"><img src="https://img.shields.io/npm/v/react-py?style=flat-square" alt="NPM Version"></a>
-  <a href="https://bundlephobia.com/package/react-py"><img src="https://img.shields.io/bundlephobia/min/react-py?style=flat-square" alt="NPM Bundle Size"></a>
-</p> -->
 
 ---
 
@@ -45,8 +28,12 @@
 
 Install `solid-py` with:
 
-```sh
-npm install solid-py
+```bash
+npm i solid-highlight-words
+# or
+yarn add solid-highlight-words
+# or
+pnpm add solid-highlight-words
 ```
 
 Then, wrap your app in a `PythonProvider` component.
@@ -108,8 +95,7 @@ _solid-py_ is available under the MIT License.
 
 ## Contact
 
-Eli Lamb - [elilambnz](https://github.com/elilambnz)  
-James Ansley - [James-Ansley](https://github.com/James-Ansley)
+Aidan Aden - [aidan](https://github.com/aidan)
 
 ## Acknowledgments
 
