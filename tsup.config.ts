@@ -11,6 +11,22 @@ const preset_options: preset.PresetOptions = {
       // will generate a separate development entry
       dev_entry: true,
     },
+    // python worker entry (index)
+    {
+      entry: "src/workers/python-worker.ts",
+      // will generate a separate development entry
+      dev_entry: false,
+    },
+    {
+      entry: "src/workers/python-console-worker.ts",
+      // will generate a separate development entry
+      dev_entry: false,
+    },
+    {
+      entry: "src/workers/service-worker.ts",
+      // will generate a separate development entry
+      dev_entry: false,
+    },
   ],
   // Set to `true` to remove all `console.*` calls and `debugger` statements in prod builds
   drop_console: true,
@@ -29,16 +45,16 @@ export default defineConfig((config) => {
 
   const parsed_options = preset.parsePresetOptions(preset_options, watching);
 
-  // if (!watching && !CI) {
-  //   const package_fields = preset.generatePackageExports(parsed_options);
+  if (!watching && !CI) {
+    const package_fields = preset.generatePackageExports(parsed_options);
 
-  //   console.log(
-  //     `package.json: \n\n${JSON.stringify(package_fields, null, 2)}\n\n`,
-  //   );
+    console.log(
+      `package.json: \n\n${JSON.stringify(package_fields, null, 2)}\n\n`
+    );
 
-  //   // will update ./package.json with the correct export fields
-  //   preset.writePackageJson(package_fields);
-  // }
+    // will update ./package.json with the correct export fields
+    preset.writePackageJson(package_fields);
+  }
 
   return preset.generateTsupOptions(parsed_options);
 });

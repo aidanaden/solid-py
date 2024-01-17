@@ -54,7 +54,9 @@ export default function usePython(props: UsePythonProps) {
 
   const createWorker = () => {
     const worker = new Worker(
-      new URL("../workers/python-worker", import.meta.url)
+      import.meta.env.DEV
+        ? new URL("../workers/python-worker", import.meta.url)
+        : new URL("../python-worker", import.meta.url)
     );
     setWorkerRef(worker);
   };

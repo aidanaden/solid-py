@@ -1,6 +1,6 @@
 {
   "name": "solid-py",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "description": "Effortlessly run Python code in your Solid apps",
   "license": "MIT",
   "author": {
@@ -27,23 +27,55 @@
   "private": false,
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index/index.js",
+  "module": "./dist/index/index.js",
+  "types": "./dist/index/index.d.ts",
   "browser": {},
   "exports": {
-    "development": {
+    ".": {
+      "development": {
+        "import": {
+          "types": "./dist/index/index.d.ts",
+          "default": "./dist/index/dev.js"
+        }
+      },
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/dev.js"
+        "types": "./dist/index/index.d.ts",
+        "default": "./dist/index/index.js"
       }
     },
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+    "./python-console-worker": {
+      "import": {
+        "types": "./dist/python-console-worker/index.d.ts",
+        "default": "./dist/python-console-worker/index.js"
+      }
+    },
+    "./python-worker": {
+      "import": {
+        "types": "./dist/python-worker/index.d.ts",
+        "default": "./dist/python-worker/index.js"
+      }
+    },
+    "./service-worker": {
+      "import": {
+        "types": "./dist/service-worker/index.d.ts",
+        "default": "./dist/service-worker/index.js"
+      }
     }
   },
-  "typesVersions": {},
+  "typesVersions": {
+    "*": {
+      "python-console-worker": [
+        "./dist/python-console-worker/index.d.ts"
+      ],
+      "python-worker": [
+        "./dist/python-worker/index.d.ts"
+      ],
+      "service-worker": [
+        "./dist/service-worker/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "dev": "vite serve dev",
     "build": "tsup",

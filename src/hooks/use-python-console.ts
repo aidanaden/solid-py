@@ -53,7 +53,9 @@ export default function usePythonConsole(props: UsePythonProps) {
 
   const createWorker = () => {
     const worker = new Worker(
-      new URL("../workers/python-console-worker", import.meta.url)
+      import.meta.env.DEV
+        ? new URL("../workers/python-console-worker", import.meta.url)
+        : new URL("../python-console-worker", import.meta.url)
     );
     setWorkerRef(worker);
   };

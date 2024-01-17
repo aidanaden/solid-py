@@ -53,7 +53,9 @@ export function PythonProvider(props: ParentProps) {
     const registerServiceWorker = async () => {
       if ("serviceWorker" in navigator) {
         try {
-          const url = new URL("../workers/service-worker", import.meta.url);
+          const url = import.meta.env.DEV
+            ? new URL("../workers/service-worker", import.meta.url)
+            : new URL("../service-worker", import.meta.url);
           const registration = await navigator.serviceWorker.register(url);
           if (registration.active) {
             console.debug("Service worker active");
