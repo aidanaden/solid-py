@@ -1,5 +1,11 @@
 # solid-highlight
 
+## 0.0.11
+
+### Patch Changes
+
+- update intent
+
 ## 0.0.10
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "solid-py",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Effortlessly run Python code in your Solid apps",
   "license": "MIT",
   "author": {

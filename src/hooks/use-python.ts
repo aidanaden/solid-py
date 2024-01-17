@@ -173,15 +173,15 @@ def run(code, preamble=''):
 
   // prettier-ignore
   const moduleReloadCode = (modules: Set<string>) => `
-  import importlib
-  import sys
-  ${Array.from(modules).map((name) => `
-  if """${name}""" in sys.modules:
-      importlib.reload(sys.modules["""${name}"""])
-  `).join('')}
-  del importlib
-  del sys
-  `
+import importlib
+import sys
+${Array.from(modules).map((name) => `
+if """${name}""" in sys.modules:
+    importlib.reload(sys.modules["""${name}"""])
+`).join('')}
+del importlib
+del sys
+`
 
   const runPython = async (code: string, preamble = "") => {
     const ready = isReady();
